@@ -1,15 +1,21 @@
 #ifndef BINARY_TREES_H
 #define BINARY_TREES_H
 
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
+#include <unistd.h>
+#include <math.h>
+#include <limits.h>
 
-/* Data structures */
+
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 
 /**
  * struct binary_tree_s - Binary tree node
+ *
  * @n: Integer stored in the node
  * @parent: Pointer to the parent node
  * @left: Pointer to the left child node
@@ -17,38 +23,29 @@
  */
 struct binary_tree_s
 {
-	int n;
-	struct binary_tree_s *parent;
-	struct binary_tree_s *left;
-	struct binary_tree_s *right;
+    int n;
+    struct binary_tree_s *parent;
+    struct binary_tree_s *left;
+    struct binary_tree_s *right;
 };
+
 typedef struct binary_tree_s binary_tree_t;
 typedef struct binary_tree_s bst_t;
 typedef struct binary_tree_s avl_t;
 typedef struct binary_tree_s heap_t;
 
-/**
- * struct levelorder_queue_s - Level order traversal queue.
- * @node: A node of a binary tree.
- * @next: The next node to traverse to in the binary tree.
- */
-typedef struct levelorder_queue_s
-{
-	binary_tree_t *node;
-	struct levelorder_queue_s *next;
-} levelorder_queue_t;
 
-/* Printing helper function */
+/* Prototypes */
+
 void binary_tree_print(const binary_tree_t *);
 
-/* Task function prototypes */
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);
 binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value);
 void binary_tree_delete(binary_tree_t *tree);
 int binary_tree_is_leaf(const binary_tree_t *node);
-int binary_tree_is_root(const binary_tree_t *node);
 void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
+int binary_tree_is_root(const binary_tree_t *node);
 void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));
 size_t binary_tree_height(const binary_tree_t *tree);
@@ -83,4 +80,23 @@ heap_t *array_to_heap(int *array, size_t size);
 int heap_extract(heap_t **root);
 int *heap_to_sorted_array(heap_t *heap, size_t *size);
 
-#endif /* BINARY_TREES_H */
+/* helper functions */
+void btlo_helper(const binary_tree_t *tree, void (*func)(int), size_t level);
+void sata_helper(avl_t **root, int *array, size_t lo, size_t hi);
+int btih_helper(const binary_tree_t *tree);
+void check_balance_avl(avl_t **node, int value);
+avl_t *inorder_sucessor(avl_t *tree, int mode);
+void change_node(avl_t **arg_tree, avl_t **arg_node);
+avl_t *avl_search_remove(avl_t **tree, int value);
+bst_t *swap(bst_t *a, bst_t *b);
+heap_t *swap_head(heap_t *head, heap_t *node);
+heap_t *perc_down(heap_t *node);
+
+/* 123 test */
+void bal(avl_t **tree);
+int successor(bst_t *node);
+int remove_type(bst_t *root);
+
+
+int btic_helper(const binary_tree_t *tree, size_t index, size_t size);
+#endif /* _BINARY_TREES_H_ */
